@@ -3,14 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { User } from './schema/user.schema';
-import { UserLevel } from "./user-level.enum";
+import { UserLevel } from './user-level.enum';
 
 @Injectable()
 export class UserService {
 
   constructor(@InjectModel('User') private readonly User: Model<User>) { }
 
-  async create(email: string, name: string, password: string) {
+  async create(email: string, name: string, password: string, role: UserLevel) {
     if (await this.User.count({email})) {
       throw new Error('Email is registered');
     }
@@ -21,6 +21,7 @@ export class UserService {
     user.name = name;
     user.email = email;
     user.password = hash;
+    user.role = role;
 
     return user.save();
   }

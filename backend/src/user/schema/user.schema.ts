@@ -5,9 +5,9 @@ import { UserLevel } from '../user-level.enum';
 export const UserModelName = 'User';
 
 export interface User extends Document {
-  email?: string,
-  name?: string,
-  password?: string,
+  email: string,
+  name: string,
+  password: string,
   role: UserLevel
 }
 
@@ -22,5 +22,4 @@ export const UserSchema = new Schema({
   }
 });
 
-// UserSchema.index({ email: 1}, { unique: true });
-// UserSchema.index({ phoneNumber: 1}, { unique: true });
+UserSchema.index({ email: 1}, { unique: true });

@@ -3,6 +3,7 @@ import { AppModule } from './../app.module';
 import * as  prompt from 'prompt';
 import { INestApplication } from '@nestjs/common';
 import { UserService } from '../user/user.service';
+import { UserLevel } from 'src/user/user-level.enum';
 
 const schema = {
   properties: {
@@ -31,34 +32,34 @@ const schema = {
   }
 };
 
-export default function () {
-  let app: INestApplication;
+export default async function () {
+  const app: INestApplication = await NestFactory.create(AppModule);
 
-  return NestFactory
-    .create(AppModule)
-    .then((_app) => {
-      app = _app;
+  console.log('');
+  console.log('Create admin user');
+  console.log('=================');
+  console.log('');
 
-      return new Promise((resolve, reject) => {
-        prompt.start();
+  const result = await new Promise<any>((resolve, reject) => {
+    prompt.start();
 
-        prompt.get(schema, (err, result) => {
-          if (err) {
-            reject(err);
-          } else if (result.password !== result.passwordConfirmation) {
-            reject('Passwords do not match');
-          } else {
-            resolve(result);
-          }
-        })
-      });
+    prompt.get(schema, (err, result) => {
+      if (err) {
+        reject(err);
+      } else if (result.password !== result.passwordConfirmation) {
+        reject('Passwords do not match');
+      } else {
+        resolve(result);
+      }
     })
-    .then((result: any) => {
-      return app.get(UserService).create(result.email,
-        result.name,
-        result.password);
-    })
-    .then(() => {
-      console.log('User created');
-    });
+  });
+
+  await app
+    .get(UserService)
+    .create(result.email,
+      result.name,
+      result.password,
+      UserLevel.Admin);
+
+  console.log('User created');
 }
