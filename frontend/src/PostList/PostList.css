@@ -1,0 +1,16 @@
+.PostList {
+  max-height: 100vh;
+  overflow-y: auto;
+  left: 0%;
+  background: black;
+  transition: width .4s, left .4s;
+}
+
+.PostList__items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.PostListItem {
+  max-width: 236px;
+}

@@ -1,0 +1,20 @@
+.PostViewActions {
+  text-align: center;
+}
+
+.PostViewActions button {
+  cursor: pointer;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 36px;
+  height: 36px;
+}
+.PostViewActions button:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.PostViewActions img {
+  opacity: .9;
+}
+.PostViewActions button:hover img {
+  opacity: 1;
+}

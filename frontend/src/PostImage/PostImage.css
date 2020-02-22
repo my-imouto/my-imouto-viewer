@@ -1,0 +1,8 @@
+img {
+  display: block;
+}
+
+.PostImage--fit img {
+  max-height: 100vh;
+  max-width: 100%;
+}

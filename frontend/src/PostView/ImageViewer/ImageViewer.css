@@ -1,0 +1,25 @@
+.ImageViewer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ImageViewer__image {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.ImageViewer__PostImage {
+  padding: 50vh 50vw;
+}
+
+.ImageViewer__ImageNavigator {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.ImageViewer__PostImage {
+  padding: 50vh 50vw;
+}

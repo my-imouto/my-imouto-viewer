@@ -1,0 +1,31 @@
+type Post {
+  id: ID!
+  md5: String!
+  user: User!
+  width: Int!
+  height: Int!
+  sampleWidth: Int!
+  sampleHeight: Int!
+  previewWidth: Int!
+  previewHeight: Int!
+  imageUrl: String!
+  sampleUrl: String!
+  previewUrl: String!
+  thumbnailUrl: String!
+  tags: [Tag]!
+}
+
+type PostConnection {
+  edges: [PostEdge]!
+  pageInfo: PageInfo!
+}
+
+type PostEdge {
+  node: Post!
+  cursor: String!
+}
+
+type Query {
+  posts(first: Int!, page: Int, query: String): PostConnection!
+  post(id: ID!): Post!
+}

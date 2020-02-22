@@ -1,0 +1,15 @@
+type User {
+  id: ID!
+  email: String
+  name: String
+  phoneNumber: String
+}
+
+type Query {
+  user(id: String!): User!
+}
+
+type Mutation {
+  createClient(phoneNumber: String!, name: String): User!
+  updateClient(id: String!, phoneNumber: String!, name: String): User!
+}

@@ -1,0 +1,8 @@
+enum TagType {
+  General
+}
+
+type Tag {
+  name: String!
+  type: TagType!
+}

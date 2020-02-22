@@ -1,0 +1,27 @@
+.SearchBar {
+  position: fixed;
+  overflow: visible;
+  height: 64px;
+  top: -64px;
+  z-index: 5;
+  transition: top .2s;
+  width: 100%;
+  padding: 8px 16px 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.SearchBar-show {
+  top: 0px;
+}
+
+.SearchBar__input {
+  font-size: 1rem;
+  width: 100%;
+  max-width: 960px;
+  text-align: center;
+  border: none;
+  box-shadow: 0 5px 7px rgba(0,0,0,.4);
+  padding: 6px;
+  box-sizing: border-box;
+}

@@ -1,0 +1,44 @@
+.PostView__viewport {
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  max-width: 100%;
+  overflow-y: auto;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.PostView__ImageViewer {
+  display: none;
+}
+
+.PostView__postInfo {
+  width: 100%;
+  max-width: 960px;
+  margin-bottom: 1rem;
+}
+
+.PostView__tags__list a {
+  margin-right: .25rem;
+}
+
+.PostView.PostView--sampleView
+  .PostView__viewport {
+  display: flex;
+}
+
+.PostView.PostView--viewMode
+  .PostView__ImageViewer {
+  display: block;
+}
+
+.PostView__actions {
+  position: fixed;
+  top: calc(100vh - 96px);
+  z-index: 10;
+}
+.PostView__actions--stick {
+  position: absolute;
+}
