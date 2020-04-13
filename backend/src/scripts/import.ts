@@ -9,6 +9,7 @@ import { resolve } from 'path';
 import { UserModule, User } from 'src/user';
 import { TagModule } from 'src/tag/tag.module';
 import { readdirSync } from 'fs';
+import { ImagickModule } from 'src/imagick/imagick.module';
 
 const importFolder = resolve(__dirname + '/../../../import');
 
@@ -36,16 +37,17 @@ class PostCreateService {
     DbModule,
     PostModule,
     TagModule,
-    UserModule
+    UserModule,
+    ImagickModule
   ],
   providers: [
     PostCreateService,
     PostProcessor
   ]
 })
-class CheckoutsModule { }
+class ImportModule { }
 
 export default async function () {
-  const app: INestApplicationContext = await NestFactory.createApplicationContext(CheckoutsModule);
+  const app: INestApplicationContext = await NestFactory.createApplicationContext(ImportModule);
   await app.get(PostCreateService).process();
 }

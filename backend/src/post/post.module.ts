@@ -6,6 +6,7 @@ import { TagModule } from 'src/tag/tag.module';
 import { PostResolver } from './resolvers/post.resolver';
 import { PostSearcher } from './services/post-searcher';
 import { AppConfigModule } from 'src/common/app-config/app-config.module';
+import { ImagickModule } from 'src/imagick/imagick.module';
 
 const Models = MongooseModule.forFeature([
   { name: PostModelName, schema: PostSchema }
@@ -15,7 +16,8 @@ const Models = MongooseModule.forFeature([
   imports: [
     Models,
     AppConfigModule,
-    TagModule
+    TagModule,
+    ImagickModule
   ],
   providers: [
     PostProcessor,

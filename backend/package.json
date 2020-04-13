@@ -43,7 +43,8 @@
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
     "sha.js": "^2.4.11",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.16",
+    "tmp": "^0.1.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.9.0",

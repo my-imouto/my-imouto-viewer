@@ -2,17 +2,19 @@
 
 This is a mini imageboard created just to learn some React and Apollo for React.
 
-* Can search and show images only
+* Can search and show images
 * No editing
-* No mobile support, only desktop
+* Desktop support only
 * Creates images from backend only
+* Converts files to JPEG
 
 ## Requirements
 
-* Node v10.13.0 - this is important because the system uses `imagemagick-native` which doesn't work with later Node versions.
-* ImageMagick - installation steps in [imagemagick-native package page](https://www.npmjs.com/package/imagemagick-native#installation)
+* ImageMagick:
+  * Option 1: Download ImageMagick portable binary from [ImageMagick page](https://imagemagick.org/script/download.php) and save as `/backend/magick`
+  * Option 2: Use ImageMagick-Native package. For this to work, Node v10.13.0 is needed because the package doesn't work with newer versions. Additional installation steps in [imagemagick-native package page](https://www.npmjs.com/package/imagemagick-native#installation)
 * An HTTP server
-* MongoDB 4.2+ (I think it should work with 3.4+ though)
+* MongoDB 4.2+ (it should work with 3.4+ though)
 
 ## Installation
 
@@ -40,7 +42,7 @@ This was made with NGINX in mind (overkill but cleaner). The required configurat
 
 ## Creating images
 
-Create a directory called `import` in the root, place the images you want to import to the system, then run the `import` script (in `./backend`) like so: `node script import`. Note that the images won't be deleted from the folder.
+Currently, the only way to create images is to place them in the `import` folder, then run the `import` script (in `./backend`): `node script import`. Note that the images won't be deleted from the folder.
 
 ## Using the UI
 

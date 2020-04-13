@@ -6,9 +6,9 @@ import { parse as parsePath, resolve } from 'path';
 import { PostModelName, Post } from '../schema/post.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import * as Imagick from 'imagemagick-native';
-import { TagModelName, Tag } from 'src/tag';
 import { TagService } from 'src/tag/services/tag.service';
+import { ImagickProvider } from 'src/imagick/imagick.provider';
+import { ImagickInterface } from 'src/imagick/services/imagick.interface';
 
 interface IdentifyResult {
   format: string,
@@ -27,9 +27,13 @@ export class PostProcessor {
 
   readonly thumbnailSize = 96;
 
-  constructor(@InjectModel(PostModelName) private readonly Post: Model<Post>,
-    @InjectModel(TagModelName) private readonly Tag: Model<Tag>,
-    private readonly TagService: TagService) {}
+  private imagick: ImagickInterface;
+
+  constructor(imagickProvider: ImagickProvider,
+    @InjectModel(PostModelName) private readonly Post: Model<Post>,
+    private readonly TagService: TagService) {
+    this.imagick = imagickProvider.provide();
+  }
 
   processFile(user: User, path: string) {
     return this.process(user, readFileSync(path), parsePath(path).base);
@@ -87,7 +91,7 @@ export class PostProcessor {
     post.previewHeight = data.height;
 
     // Thumbnail
-    buffer = this.resizeToThumbnail(buffer);
+    buffer = await this.resizeToThumbnail(buffer);
     path = resolve(process.cwd() + `/../public/thumbnail/${subDirs}`);
     if (!existsSync(path)) {
       mkdirSync(path, {recursive: true});
@@ -104,15 +108,7 @@ export class PostProcessor {
   }
 
   private identifyImage(srcData: Buffer): Promise<IdentifyResult> {
-    return new Promise((resolve, reject) => {
-      Imagick.identify({ srcData }, function(err, result) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      })
-    });
+    return this.imagick.identify(srcData);
   }
 
   private async resizeToSample(srcData: Buffer) {
@@ -120,12 +116,9 @@ export class PostProcessor {
 
     if (data.width > this.sampleMaxWidth || data.height > this.sampleMaxHeight) {
       return {
-        buffer: Imagick.convert({
-          srcData,
-          width: this.sampleMaxWidth,
-          height: this.sampleMaxHeight,
-          resizeStyle: 'aspectfit'
-        }),
+        buffer: await this.imagick.resize(srcData,
+          this.sampleMaxWidth,
+          this.sampleMaxHeight),
         resized: true
       };
     }
@@ -137,22 +130,13 @@ export class PostProcessor {
   }
 
   private async resizeToPreview(srcData: Buffer) {
-    return Imagick.convert({
-      srcData,
-      width: this.previewMaxWidth,
-      height: this.previewMaxHeight,
-      resizeStyle: 'aspectfit'
-    });
+    return this.imagick.resize(srcData,
+      this.previewMaxWidth,
+      this.previewMaxHeight);
   }
 
   private resizeToThumbnail(srcData: Buffer) {
-    return Imagick.convert({
-      srcData,
-      width: this.thumbnailSize,
-      height: this.thumbnailSize,
-      resizeStyle: 'aspectfill',
-      gravity: 'Center'
-    });
+    return this.imagick.thumbnail(srcData, this.thumbnailSize);
   }
 
   private async processFilename(post: Post, fileName: string) {
