@@ -26,7 +26,7 @@
     "@nestjs/mongoose": "^6.1.2",
     "@nestjs/passport": "^6.1.1",
     "@nestjs/platform-express": "^6.7.2",
-    "apollo-server-core": "^2.9.15",
+    "apollo-server-core": "^2.14.2",
     "apollo-server-express": "^2.9.15",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
